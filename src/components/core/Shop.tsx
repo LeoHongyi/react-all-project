@@ -3,7 +3,7 @@ import React from 'react'
 
 const Shop = () => {
   return (
-    <Layout>
+    <Layout title={'online-shop-center'} subTitle={'enjoy it, pick it~'}>
       Shop
     </Layout>
   )

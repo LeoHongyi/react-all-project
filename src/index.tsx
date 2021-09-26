@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Routes from './components/Routes';
 import store from './store';
-import {history} from './store'
+import { history } from './store'
+import "./style.css"
 
 ReactDOM.render(
   <Provider store={store}>
