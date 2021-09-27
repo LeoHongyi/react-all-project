@@ -1,9 +1,11 @@
-import { Menu } from 'antd'
+import { Badge, Menu } from 'antd'
 import { RouterState } from 'connected-react-router'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { isAuth } from '../../helpers'
+import { itemCount } from '../../helpers/cart'
+import { TotalContext } from '../../store/AnotherStore'
 import { Jwt } from '../../store/models/auth'
 import { AppState } from '../../store/reducers'
 
@@ -18,6 +20,13 @@ const Navigation = () => {
   const isSignin = useActive(pathname, "/signin");
   const isSignup = useActive(pathname, "/signup");
   const isDashboard = useActive(pathname, getDashboardUrl())
+  const isCart = useActive(pathname, "/cart");
+
+  const [count, setCount] = useContext(TotalContext);
+
+  React.useEffect(() => {
+    setCount(itemCount())
+  })
 
   function getDashboardUrl() {
     let url = "/user/dashboard";
@@ -36,6 +45,12 @@ const Navigation = () => {
       </Menu.Item>
       <Menu.Item className={isShop}>
         <Link to="/shop">商城</Link>
+      </Menu.Item>
+      <Menu.Item className={isCart}>
+        <Link to="/cart">
+          购物车
+          <Badge count={count} offset={[5, -10]}/>
+        </Link>
       </Menu.Item>
       {
         !isAuth() && <>

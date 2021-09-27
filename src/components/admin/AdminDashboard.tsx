@@ -30,7 +30,7 @@ const AdminDashboard = () => {
     {
       content: '订单列表',
       component: <OrderedListOutlined />,
-      url: ""
+      url: "/admin/orders"
     }];
   const adminLinks = () => {
     return (

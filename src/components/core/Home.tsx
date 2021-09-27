@@ -23,17 +23,17 @@ const Home = () => {
   }, [])
   return (
     <Layout title={'online-shop'} subTitle={'enjoy it~'}>
-      {/* <Search /> */}
+      <Search />
       <Title level={5}>最新上架</Title>
       <Row gutter={[16, 16]}>
-        {/* {
+        {
           createdAt.products.map((item) => (
               <Col span="6">
               <ProductItem product={item}/>
             </Col>
           )
           )
-        } */}
+        }
       </Row>
       <Title level={5}>最受欢迎</Title>
       <Row gutter={[16, 16]}>

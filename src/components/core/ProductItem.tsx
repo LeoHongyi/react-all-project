@@ -1,14 +1,45 @@
 import { Button, Card, Col, Row, Typography, Image } from 'antd'
+import { push } from 'connected-react-router'
+import moment from 'moment'
 import React, { FC } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { API } from '../../config'
+import { addItem } from '../../helpers/cart'
 import { Product } from '../../store/models/product'
 
 const { Title, Paragraph } = Typography
 interface Props {
-  product: Product
+  product: Product,
+  showViewProduct?: boolean,
+  showCartBtn?: boolean
 }
-const ProductItem: FC<Props> = ({ product }) => {
+const ProductItem: FC<Props> = ({ product, showViewProduct = true, showCartBtn = true }) => {
+  const dispatch = useDispatch()
+  const addToCart = () => {
+    addItem(product, () => {
+      dispatch(push("/cart"))
+    })
+  }
+  const showButtons = () => {
+    let buttonArray = [];
+    if (showViewProduct) {
+      buttonArray.push(
+      <Button type="link">
+          <Link to={`/product/${product._id}`}>查看详情</Link>
+        </Button>
+      )
+    }
+    if (showCartBtn) {
+      buttonArray.push(
+        <Button type="link" onClick={addToCart}>
+          加入购物车
+        </Button>
+      )
+    }
+
+    return buttonArray;
+  }
   return (
   <Card
     hoverable
@@ -18,14 +49,7 @@ const ProductItem: FC<Props> = ({ product }) => {
           alt={product.name}
         />
     }
-    actions={[
-      <Button type="link">
-        <Link to="">查看详情</Link>
-      </Button>,
-      <Button type="link">
-        <Link to="">加入购物车</Link>
-      </Button>
-    ]}
+    actions={showButtons()}
     >
       <Title level={5}>{ product.name }</Title>
       <Paragraph ellipsis={{ rows: 2 }}>{ product.description }</Paragraph>
@@ -34,7 +58,7 @@ const ProductItem: FC<Props> = ({ product }) => {
         <Col span="12" style={{ textAlign: "right" }}>价格: {product.price}</Col>
       </Row>
       <Row>
-        <Col span="12">上架时间: { product.createAt }</Col>
+        <Col span="12">上架时间: { moment(product.createAt).format("YYYY-MM-DD")  }</Col>
         <Col span="12" style={{ textAlign: "right" }}>  所属分类: {product.category.name}</Col>
       </Row>
   </Card>

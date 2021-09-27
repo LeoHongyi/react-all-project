@@ -5,12 +5,16 @@ import { Provider } from 'react-redux';
 import Routes from './components/Routes';
 import store from './store';
 import { history } from './store'
+import AnotherStore from './store/AnotherStore';
 import "./style.css"
+
 
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
+      <AnotherStore>
         <Routes />
+      </AnotherStore>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
